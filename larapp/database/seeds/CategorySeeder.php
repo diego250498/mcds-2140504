@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Category;
+use App\category;
 
 class CategorySeeder extends Seeder
 {
@@ -22,9 +22,10 @@ class CategorySeeder extends Seeder
             'description' => 'Consola Hibrida de nintendo',
             'created_at'=> now()
         ]);
-        $cat = new Category;
+        $cat = new category;
         $cat->name = 'Play Station 5';
         $cat->description = 'Nueva consola de playstation para la siguiente generacion';
         $cat->save();
+
     }
 }
