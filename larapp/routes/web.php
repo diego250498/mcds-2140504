@@ -22,7 +22,20 @@ Route::get('hellowworld', function () {
 });
 
 Route::get('users', function () {
-    dd(App\User::all());
+    $users = App\User::all()->take(10);
+
+    foreach($user as $user){
+        $user->age = data_diff(data_create($user->birthdate), data_create(now))->format('%y');
+        $yearDiff = striftime("%Y", now()->getTimestamp()) - striftime("%Y", $used->created_at->getTimestamp());
+        $weekDiff = strftime("%W", now()->getTimestamp()) - strftime("%W", $user->created_at->getTimestamp());
+
+        $created = (($yearDiff >0) ? $yearDiff.'años':'').
+                   (($weekDiff >0 && $weekDiff <30) ? $weekDiff.'semanas':'');
+                   
+        $user->created = $created; 
+    }
+
+    return view('users',['users'=>$users]);
 });
 
 Route::get('users/{id}', function ($id) {
