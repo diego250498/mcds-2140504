@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,22 +23,28 @@ Route::get('hellowworld', function () {
 });
 
 Route::get('users', function () {
-    $users = App\User::all()->take(10);
-
-    foreach($users as $user){
-        $user->age = data_diff(data_create($user->birthdate), data_create(now))->format('%y');
-        $yearDiff = striftime("%Y", now()->getTimestamp()) - strftime("%Y", $user->created_at->getTimestamp());
-        $weekDiff = strftime("%W", now()->getTimestamp()) - strftime("%W", $user->created_at->getTimestamp());
-
-        $created = (($yearDiff >0) ? $yearDiff.'años':'').
-                   (($weekDiff >0 && $weekDiff <30) ? $weekDiff.'semanas':'');
-                   
-        $user->created = $created; 
-    }
-
-    return view('users',['users'=>$users]);
+    dd(App\User::all());
 });
 
 Route::get('users/{id}', function ($id) {
     dd(App\User::find($id));
+});
+
+Route::get('challenge', function () {
+    foreach (App\User::all()->take(10) as $user) {
+    $years = Carbon::createFromDate($user->birthdate)->diff()->format('%y years old');
+    $since = Carbon::parse($user->created_at);
+    $rs[] = $user->fullname." - ".$years." - created ".$since->diffForHumans();
+    }
+    return view('challenge', ['rs' => $rs]);
+    });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/examples', function () {
+    $users = App\User::all()->take(5);
+    $categories = App\Category::all()->take(0);
+    $games = App\Game::all();
+    return view('examples',['users'=>$users,'categories'=>$categories,'games'=>$games]);
 });
