@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'fullname',
+        'fullname', 
         'email',
         'phone',
         'birthdate',
@@ -47,7 +47,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function games(){
+    public function games() {
         return $this->hasMany('App\Game');
     }
+
+
 }

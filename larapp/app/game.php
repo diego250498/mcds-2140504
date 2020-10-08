@@ -4,9 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class game extends Model
+class Game extends Model
 {
-      /**
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -21,12 +22,13 @@ class game extends Model
         'price'
     ];
 
-    public function user(){
+    public function user() {
         return $this->belongsTo('App\User');
     }
 
-    
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo('App\Category');
     }
+
 }

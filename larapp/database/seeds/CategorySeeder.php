@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\category;
+use App\Category;
 
 class CategorySeeder extends Seeder
 {
@@ -13,18 +13,18 @@ class CategorySeeder extends Seeder
     public function run()
     {
         DB::table('categories')->insert([
-            'name'  => 'Xbox serie X',
-            'description' => 'Nueva consola de Microsoft de la siguiente generacion',
-            'created_at'=> now()
+            'name'        => 'Xbox Serie X',
+            'description' => 'Nueva consola de Microsoft para la siguiente generación',
+            'created_at'  => now()
         ]);
         DB::table('categories')->insert([
-            'name'  => 'Nintendo Switch',
-            'description' => 'Consola Hibrida de nintendo',
-            'created_at'=> now()
+            'name'        => 'Nintendo Switch',
+            'description' => 'Consola Híbrida de Nintendo',
+            'created_at'  => now()
         ]);
-        $cat = new category;
-        $cat->name = 'Play Station 5';
-        $cat->description = 'Nueva consola de playstation para la siguiente generacion';
+        $cat = new Category;
+        $cat->name        = 'Play Station 5';
+        $cat->description = 'Nueva consola de PlayStation para la siguiente generación';
         $cat->save();
 
     }

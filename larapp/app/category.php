@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class category extends Model
+class Category extends Model
 {
-     /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -17,7 +17,10 @@ class category extends Model
         'description'
     ];
 
-    public function games(){
+    public function games()
+    {
         return $this->hasMany('App\Game');
     }
+
+
 }
