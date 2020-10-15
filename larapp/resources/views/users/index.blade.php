@@ -10,7 +10,7 @@
 				<i class="fa fa-plus"></i>
 				Adicionar Usuario 
 			</a>
-			<hr>
+			<br><br>
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
@@ -37,6 +37,7 @@
 					@endforeach
 				</tbody>
 			</table>
+			{{ $users->links() }}
 		</div>
 	</div>
 @endsection
