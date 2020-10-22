@@ -10,6 +10,26 @@
         Adicionar Usiarios
          </h1>
          <hr>
+
+         <nav aria-label="breadcrumb">
+         <ol class="breadcrumb">
+           <li class="breadcrumb-item"><a href="{{ url('home') }}">
+           <i class="fa fa-clipboard-list"></i>
+           Escritorio
+           </a>
+           </li>
+          <li class="breadcrumb-item"><a href="{{ route('users.index') }}">
+            <i class="fa fa-users"></i>
+            Modulo Usuarios
+            </a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+          <i class="fa fa-plus"></i>
+          Adicionar Usuarios
+          </li>
+         </ol>
+        </nav>
+
          <form method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
                         @csrf
 
@@ -55,7 +75,7 @@
 
                         <div class="form-group">
                                 <select name="gender" id="gender" class="form-control @error('gender') is-invalid @enderror">
-                                    <option value="">@lang('general.select-value')</option>
+                                    <option value="">Seleccione el Genero</option>
                                     <option value="Female" @if(old('gender') == 'Female') selected @endif>@lang('general.select-female')</option>
                                     <option value="Male" @if(old('gender') == 'Male') selected @endif>@lang('general.select-male')</option>
                                 </select>
@@ -78,6 +98,9 @@
                         </div>
 
                         <div class="form-group">
+                        <div class="text-center my-3">
+                                    <img src="{{ asset('imgs/no-photo.png') }}" class="img-thumbnail" id="preview" width="120px">
+                                </div>
                                 <div class="custom-file">
                                   <input type="file" class="custom-file-input @error('photo') is-invalid @enderror" id="photo" name="photo"
                                       accept="image/*">
