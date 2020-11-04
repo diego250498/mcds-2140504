@@ -3,36 +3,36 @@
 @section('title', 'Crear Usuario')
 
 @section('content')
- <div class="row">
-    <div class="col-md-6 offset-md-3">
-        <h1>
-        <i class="fa fa-plus"></i>
-        Adicionar Usiarios
-         </h1>
-         <hr>
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			<h1>
+				<i class="fa fa-plus"></i> 
+				Adicionar Usuarios
+			</h1>
+			<hr>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ url('home') }}">
+                        <i class="fa fa-clipboard-list"></i>  
+                        Escritorio
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('users.index') }}">
+                        <i class="fa fa-users"></i>  
+                         Módulo Usuarios
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fa fa-plus"></i> 
+                    Adicionar Usuarios
+                </li>
+              </ol>
+            </nav>
 
-         <nav aria-label="breadcrumb">
-         <ol class="breadcrumb">
-           <li class="breadcrumb-item"><a href="{{ url('home') }}">
-           <i class="fa fa-clipboard-list"></i>
-           Escritorio
-           </a>
-           </li>
-          <li class="breadcrumb-item"><a href="{{ route('users.index') }}">
-            <i class="fa fa-users"></i>
-            Modulo Usuarios
-            </a>
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">
-          <i class="fa fa-plus"></i>
-          Adicionar Usuarios
-          </li>
-         </ol>
-        </nav>
-
-         <form method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
+			<form method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
                         @csrf
-
                         <div class="form-group">
                                 <input id="fullname" type="text" class="form-control @error('fullname') is-invalid @enderror" name="fullname" value="{{ old('fullname') }}" placeholder="@lang('general.label-fullname')" autofocus>
 
@@ -75,7 +75,7 @@
 
                         <div class="form-group">
                                 <select name="gender" id="gender" class="form-control @error('gender') is-invalid @enderror">
-                                    <option value="">Seleccione el Genero</option>
+                                    <option value="">Seleccione el Genero...</option>
                                     <option value="Female" @if(old('gender') == 'Female') selected @endif>@lang('general.select-female')</option>
                                     <option value="Male" @if(old('gender') == 'Male') selected @endif>@lang('general.select-male')</option>
                                 </select>
@@ -98,21 +98,21 @@
                         </div>
 
                         <div class="form-group">
-                        <div class="text-center my-3">
+                                <div class="text-center my-3">
                                     <img src="{{ asset('imgs/no-photo.png') }}" class="img-thumbnail" id="preview" width="120px">
                                 </div>
                                 <div class="custom-file">
-                                  <input type="file" class="custom-file-input @error('photo') is-invalid @enderror" id="photo" name="photo"
-                                      accept="image/*">
-                                <label class="custom-file-label" for="customFile"><i class="fa fa-upload"></i> Foto 
-                                </label>
-                                </div>
-
+                                   <input type="file" class="custom-file-input @error('photo') is-invalid @enderror" id="photo" name="photo" accept="image/*">
+                                   <label class="custom-file-label" for="customFile"> 
+                                   	 <i class="fa fa-upload"></i> 
+                                   	 Foto
+                                   </label>
                                 @error('photo')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                </div>    
                         </div>
 
                         <div class="form-group">
@@ -131,11 +131,11 @@
 
                         <div class="form-group">
                                 <button type="submit" class="btn btn-larapp btn-block text-uppercase">
-                                   Guardar
+                                    Adicionar
                                     <i class="fa fa-save"></i> 
                                 </button>
                         </div>
                     </form>
-    </div>
- </div>
+		</div>
+	</div>
 @endsection

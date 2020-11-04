@@ -36,11 +36,10 @@ h1 {
 	color: #133b5c;
 }
 
-// Paagination
-
+// Pagination
 ul.pagination {
 	justify-content: center;
-	.page-item.actice .page-link {
+	.page-item.active .page-link {
 		background-color: #1e5f74;
 		border-color: #133b5c;
 		color: rgba(255,255,255,.8);

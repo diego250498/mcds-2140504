@@ -20,7 +20,7 @@ class UserController extends Controller
     public function index()
     {
         //$users = User::all();
-        $users = User::paginate(20);
+        $users = User::paginate(10);
         return view('users.index')->with('users', $users);
     }
 
@@ -44,21 +44,22 @@ class UserController extends Controller
     {
         //dd($request->all());
         $user = new User;
-        $user->fullname = $request->fullname;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
+        $user->fullname  = $request->fullname;
+        $user->email     = $request->email;
+        $user->phone     = $request->phone;
         $user->birthdate = $request->birthdate;
-        $user->address = $request->address;
+        $user->gender    = $request->gender;
+        $user->address   = $request->address;
         if ($request->hasFile('photo')) {
             $file = time().'.'.$request->photo->extension();
             $request->photo->move(public_path('imgs'), $file);
             $user->photo = 'imgs/'.$file;
         }
-        $user->password = $request->password;
+        $user->password  = bcrypt($request->password);
 
         if($user->save()) {
-            return redirect('users')->witch('message', 'El Usuario:'.$user->fulname.'fue Adicionado con Exito!');
-        }
+            return redirect('users')->with('message', 'El Usuario: '.$user->fullname.' fue Adicionado con Exito!');
+        } 
 
     }
 
@@ -92,14 +93,15 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
-        dd($request->all());
-        $user->fullname = $request->fullname;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
+        //dd($request->all());
+        $user->fullname  = $request->fullname;
+        $user->email     = $request->email;
+        $user->phone     = $request->phone;
         $user->birthdate = $request->birthdate;
-        $user->address = $request->address;
+        $user->gender    = $request->gender;
+        $user->address   = $request->address;
         if ($request->hasFile('photo')) {
             $file = time().'.'.$request->photo->extension();
             $request->photo->move(public_path('imgs'), $file);
@@ -107,8 +109,8 @@ class UserController extends Controller
         }
 
         if($user->save()) {
-            return redirect('users')->witch('message', 'El Usuario:'.$user->fulname.'fue Modificado con Exito!');
-        }
+            return redirect('users')->with('message', 'El Usuario: '.$user->fullname.' fue Modificado con Exito!');
+        } 
     }
 
     /**
@@ -119,6 +121,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-       // $user->destroy();
+        if($user->delete()) {
+            return redirect('users')->with('message', 'El Usuario: '.$user->fullname.' fue Eliminado con Exito!');
+        } 
     }
 }

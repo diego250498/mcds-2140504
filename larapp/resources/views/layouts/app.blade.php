@@ -37,19 +37,38 @@
         @yield('content')
     </main>
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" ></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/sweetalert2@9.js') }}"></script>
     <script>
         $(document).ready(function() {
+            /* - - -*/
             @if (session('message'))
-                Swal.fire(
-                    'Felicitaciones',
-                    '{{ session('message') }}',
-                    'sucess'
-                );
-
-            @endif 
-
+                Swal.fire({
+                    title: 'Felicitaciones',
+                    text: '{{ session('message') }}',
+                    icon: 'success',
+                    confirmButtonColor: '#1e5f74',
+                    confirmButtonText: 'Aceptar'
+                });
+            @endif
+            /* - - -*/
+            $('.btn-delete').click(function(event) {
+                Swal.fire({
+                    title: 'Esta usted seguro ?',
+                    text: 'Desea eliminar este registro',
+                    icon: 'error',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d0211c',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonColor: '#1e5f74',
+                    confirmButtonText: 'Aceptar',  
+                }).then((result) => {
+                    if(result.value) {
+                        $(this).parent().submit();
+                    }
+                });
+            });
+            /* - - -*/
             $('#photo').change(function(event) {
                let reader = new FileReader();
                reader.onload = function(event) {
@@ -57,8 +76,15 @@
                }
                reader.readAsDataURL(this.files[0]);
             });
+            /* - - -*/
+            $('#image').change(function(event) {
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                    $('#preview').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
         });
-
     </script>
 </body>
 </html>

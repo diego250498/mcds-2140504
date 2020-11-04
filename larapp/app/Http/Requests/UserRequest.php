@@ -23,28 +23,44 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'fullname' => 'required',
-            'email'     => 'required|email|unique:users',
-            'phone'     => 'required|numeric',
-            'birthdate' => 'required|date',
-            'gender'    => 'required',
-            'address'   => 'required',
-            'photo'     => 'required|image|max:1000',
-            'password'  => 'required|min:6|confirmed',
-        ];
+        if ($this->method() == 'PUT') {
+            // Edit Form
+            return [
+                'fullname'  => 'required',
+                'email'     => 'required|email|unique:users,email,'.$this->id,
+                'phone'     => 'required|numeric',
+                'birthdate' => 'required|date',
+                'gender'    => 'required',
+                'address'   => 'required',
+                'photo'     => 'max:1000',
+            ];
+        } else {
+            // Create Form
+            return [
+                'fullname'  => 'required',
+                'email'     => 'required|email|unique:users',
+                'phone'     => 'required|numeric',
+                'birthdate' => 'required|date',
+                'gender'    => 'required',
+                'address'   => 'required',
+                'photo'     => 'required|image|max:1000',
+                'password'  => 'required|min:6|confirmed',
+            ];
+        }
+        
     }
 
     public function messages() {
         return [
-            'fullname.required'  => 'El campo "Nombre Completo" es Obligatorio.',
-            'email.required'     => 'El campo "Correo Electrónico" es Obligatorio.',
-            'phone.required'     => 'El campo "Número Telefónico" es Obligatorio.',
-            'birthdate.required' => 'El campo "Fecha de Nacimiento" es Obligatorio.',
-            'gender.required'    => 'El campo "Genero" es Obligatorio.',
-            'address.required'   => 'El campo "Dierección" es Obligatorio.',
-            'photo.required'     => 'El campo "Foto" es Obligatorio.',
-            'password.required'  => 'El campo "Contraseña" es Obligatorio.',
+            'fullname.required' => 'El campo ":attribute" es obligatorio.',
+            'email.required'    => 'El campo "Correo Electrónico" es obligatorio.'
         ];
     }
+
+    public function attributes() {
+        return [
+            'fullname' => 'Nombre Completo'
+        ];
+    }
+
 }
