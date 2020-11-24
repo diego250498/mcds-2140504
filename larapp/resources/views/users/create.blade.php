@@ -26,7 +26,7 @@
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
                     <i class="fa fa-plus"></i> 
-                    Adicionar Usuarios
+                    Adicionar Usuario
                 </li>
               </ol>
             </nav>
