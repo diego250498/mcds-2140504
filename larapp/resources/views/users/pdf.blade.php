@@ -13,7 +13,6 @@
 			font-family: sans-serif;
 			font-size: 10px;
 			border: 1px solid #ccc;
-			color: #333;
 			padding: 4px;
 		}
 		table tr:nth-child(odd) {
@@ -40,14 +39,14 @@
 		</thead>
 		<tbody>
 			@foreach ($users as $user)
-				<tr>
-					<td>{{ $user->id}}</td>
-					<td>{{ $user->fullname}}</td>
-					<td>{{ $user->email}}</td>
-					<td>{{ $user->phone}}</td>
-					<td>{{ $user->birthdate}}</td>
-					<td><img src="{{ public_path().'/'.$user->photo }}" width="40px"></td>
-				</tr>
+			<tr>
+				<td>{{ $user->id}}</td>
+				<td>{{ $user->fullname}}</td>
+				<td>{{ $user->email}}</td>
+				<td>{{ $user->phone}}</td>
+				<td>{{ $user->birthdate}}</td>
+				<td><img src="{{ public_path().'/'.$user->photo }}" width="50px"></td>
+			</tr>
 			@endforeach
 		</tbody>
 	</table>

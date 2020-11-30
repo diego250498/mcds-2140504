@@ -5,28 +5,28 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-
 use App\Exports\UserExport;
 use App\Imports\UserImport;
 
 class UserController extends Controller
 {
-    public function __construct() 
+
+      public function __construct()
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+     public function index()
     {
         //$users = User::all();
-        $users = User::paginate(10);
+        $users = User:: paginate(10);
         return view('users.index')->with('users', $users);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -53,17 +53,22 @@ class UserController extends Controller
         $user->birthdate = $request->birthdate;
         $user->gender    = $request->gender;
         $user->address   = $request->address;
+
         if ($request->hasFile('photo')) {
             $file = time().'.'.$request->photo->extension();
             $request->photo->move(public_path('imgs'), $file);
             $user->photo = 'imgs/'.$file;
         }
+
         $user->password  = bcrypt($request->password);
+ 
 
         if($user->save()) {
             return redirect('users')->with('message', 'El Usuario: '.$user->fullname.' fue Adicionado con Exito!');
-        } 
+        }
+
     }
+
 
     /**
      * Display the specified resource.
@@ -74,7 +79,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         //dd($user);
-        return view('users.show')->with('user', $user);
+         return view('users.show')->with('user', $user);
     }
 
     /**
@@ -96,7 +101,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UserRequest $request, User $user)
-    {
+   {
         //dd($request->all());
         $user->fullname  = $request->fullname;
         $user->email     = $request->email;
@@ -114,7 +119,6 @@ class UserController extends Controller
             return redirect('users')->with('message', 'El Usuario: '.$user->fullname.' fue Modificado con Exito!');
         } 
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -123,29 +127,29 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if($user->delete()) {
-            return redirect('users')->with('message', 'El Usuario: '.$user->fullname.' fue Eliminado con Exito!');
-        } 
+        if($user->delete()) { return redirect('users')->with('message', 'El Usuario: '.$user->fullname.' fue Eliminado con Exito!'); 
     }
-
-    public function pdf() {
+  }
+   
+   public function pdf() {
         $users = User::all();
         $pdf = \PDF::loadView('users.pdf', compact('users'));
         return $pdf->download('allusers.pdf');
     }
 
-    public function excel() {
-        return \Excel::download(new UserExport, 'allusers.xlsx');
+     public function excel() {
+
+      return \Excel::download(new UserExport, 'allusers.xlsx');
     }
 
-    public function import(Request $request) {
+     public function import(Request $request) {
         $file = $request->file('file');
         \Excel::import(new UserImport, $file);
         return redirect()->back()->with('message', 'Usuarios importados con exito!');
     }
 
-    public function search(Request $request) {
-        $users = User::names($request->q)->orderBy('id','ASC')->paginate(20);
+   public function search(Request $request) {
+        $users = User::names($request->q)->orderBy('id','ASC')->paginate(10);
         return view('users.search')->with('users', $users);
     }
 

@@ -23,28 +23,37 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->method() == 'PUT') {
-            // Edit Form
-            return [
-                'name'        => 'required|unique:categories,name,'.$this->id,
-                'description' => 'required',
-                'image'       => 'max:1000',
-            ];
-        } else {
-            // Create Form
-            return [
-                'name'        => 'required|unique:categories',
-                'description' => 'required',
-                'image'       => 'required|image|max:1000',
-            ];
-        }
-        
-    }
-
-    public function messages() {
         return [
-            'name.required'        => 'El campo "Nombre" es obligatorio.',
-            'description.required' => 'El campo "Descripción" es obligatorio.'
+             'name'            => 'required',
+             'image'           => 'required|image|max:1000',
+             'description'     => 'required',
         ];
     }
+
+
+    public function messages() {
+
+
+        return[
+            'name.required'         => 'El campo :attribute es obligatorio.',
+            'image.required'        => 'El campo :attribute es obligatorio.',
+            'description.required'  => 'El campo :attribute es obligatorio.'
+  
+
+
+        ];
+    }
+
+    public function attributes() {
+
+        return [
+
+            'name'         => 'Nombre Categoria',
+            'image'        => 'Imagen',
+            'description'  => 'Descripcion'
+        ];
+
+    }
 }
+
+

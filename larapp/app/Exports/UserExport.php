@@ -32,7 +32,7 @@ class UserExport implements FromView, WithColumnWidths, WithStyles
     public function styles(Worksheet $sheet)
     {
         return [
-            1 => ['font' => ['bold' => true, 'size' => 16]],
+            1 => ['font' => ['bold' => true, 'size' => 10]],
         ];
     }
 }

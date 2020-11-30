@@ -47,11 +47,38 @@ class GameRequest extends FormRequest
             ];
         }
     }
-
+    
     public function messages() {
-        return [
-            'user_id.required'     => 'El campo "Usuario" es obligatorio.',
-            'category_id.required'  => 'El campo "Categoría" es obligatorio.'
+
+
+        return[
+            'name.required'        => 'El campo :attribute es obligatorio.',
+            'iamge.required'       => 'El campo :attribute es obligatorio.',
+            'description.required' => 'El campo :attribute es obligatorio.',
+            'user_id.required'     => 'El campo :attribute es obligatorio.',
+            'category_id.required' => 'El campo :attribute es obligatorio.',
+            'slider.required'      => 'El campo :attribute es obligatorio.',
+            'price.required'       => 'El campo :attribute es obligatorio.'
+
+
         ];
     }
+
+    public function attributes() {
+
+        return [
+
+            'name'        => 'Nombre juego',
+            'image'       => 'Imagen',
+            'description' => 'Descripcion',
+            'user_id'     => 'Usuario',
+            'category_id' => 'Categoria',
+            'slider'      => 'Destacado',
+            'price'       => 'Precio'
+      
+        ];
+
+    }
 }
+
+

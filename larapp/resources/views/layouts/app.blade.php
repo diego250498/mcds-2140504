@@ -41,17 +41,30 @@
     <script src="{{ asset('js/sweetalert2@9.js') }}"></script>
     <script>
         $(document).ready(function() {
-            /* - - -*/
+            //
             @if (session('message'))
+            Swal.fire({
+                title: 'Felicitaciones',
+                text: '{{ session('message') }}',
+                icon: 'success',
+                confirmButtonColor: '#1e5f74',
+                confirmButtonText: 'Aceptar'
+            });
+            @endif
+            
+            //
+           @if (session('error'))
                 Swal.fire({
-                    title: 'Felicitaciones',
-                    text: '{{ session('message') }}',
-                    icon: 'success',
-                    confirmButtonColor: '#1e5f74',
-                    confirmButtonText: 'Aceptar'
+                  position: 'top-end',
+                  icon: 'error',
+                  title: 'Acceso Denegado',
+                  text: '{{ session('error') }}',
+                  showConfirmButton: false,
+                  timer: 2500
                 });
             @endif
-            /* - - -*/
+
+            //
             $('.btn-delete').click(function(event) {
                 Swal.fire({
                     title: 'Esta usted seguro ?',
@@ -61,30 +74,42 @@
                     cancelButtonColor: '#d0211c',
                     cancelButtonText: 'Cancelar',
                     confirmButtonColor: '#1e5f74',
-                    confirmButtonText: 'Aceptar',  
+                    confirmButtonText: 'Aceptar',
                 }).then((result) => {
                     if(result.value) {
                         $(this).parent().submit();
                     }
                 });
             });
-            /* - - -*/
+
+          //
             $('#photo').change(function(event) {
-               let reader = new FileReader();
-               reader.onload = function(event) {
+                let reader = new FileReader();
+                reader.onload = function(event) {
                     $('#preview').attr('src', event.target.result);
-               }
-               reader.readAsDataURL(this.files[0]);
+                }
+                reader.readAsDataURL(this.files[0]);
             });
-            /* - - -*/
+
+            //
+            $('#image').change(function(event) {
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                    $('#preview').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+
+            //
             $('.btn-excel').click(function(event) {
                 $('#file').click();
             });
             $('#file').change(function(event) {
                 $(this).parent().submit();
             });
-            /* - - -*/
-            $('body').on('keyup','#qsearch', function(event) {
+            //
+
+            $('body').on('keyup','#qsearch', function(event){
                 event.preventDefault();
                 $q = $(this).val();
                 $t = $('input[name=_token]').val();
@@ -100,7 +125,7 @@
                     });
                 }, 2000);
             });
-            /* - - -*/
+            //
         });
     </script>
 </body>
