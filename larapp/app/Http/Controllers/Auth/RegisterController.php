@@ -36,7 +36,6 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    
     public function __construct()
     {
         $this->middleware('guest');
@@ -52,29 +51,29 @@ class RegisterController extends Controller
     {
         if(session()->get('locale') == 'en') {
             $messages = array(
-                'fullname.required'  => 'The "FullName" field is required.',
-                'email.required'     => 'The "Email" field is required.',
-                'phone.required'     => 'The "PhoneNumber" field is required.',
-                'birthdate.required' => 'The "BirthDate" field is required.',
-                'gender.required'    => 'The "Gender" field is required.',
-                'address.required'   => 'The "Address" field is required.',
-                'password.required'  => 'The "Password" field is required.',
+                'name.required' => 'The "Name" field is required',
+                'email.required' => 'The "Email" field is required',
+                'phone.required' => 'The "PhoneNumber" field is required',
+                'birthdate.required' => 'The "Birthdate" field is required',
+                'gender.required' => 'The "Gender" field is required',
+                'address.required' => 'The "Address" field is required',
+                'password.required' => 'The "Password" field is required',
             );
         }
         else {
             $messages = array(
-                'fullname.required'  => 'El campo "Nombre Completo" es Obligatorio.',
-                'email.required'     => 'El campo "Correo Electrónico" es Obligatorio.',
-                'phone.required'     => 'El campo "Número Telefónico" es Obligatorio.',
-                'birthdate.required' => 'El campo "Fecha de Nacimiento" es Obligatorio.',
-                'gender.required'    => 'El campo "Genero" es Obligatorio.',
-                'address.required'   => 'El campo "Dierección" es Obligatorio.',
-                'password.required'  => 'El campo "Contraseña" es Obligatorio.',
+                'name.required' => 'El campo "Nombre" es requerido',
+                'email.required' => 'El campo "Correo Electrónico" es requerido',
+                'phone.required' => 'El campo "Número Telefónico" es requerido',
+                'birthdate.required' => 'El campo "Fecha de Nacimiento" es requerido',
+                'gender.required' => 'El campo "Género" es requerido',
+                'address.required' => 'El campo "Dirección" es requerido',
+                'password.required' => 'El campo "Contraseña" es requerido',
             );
         }
-        
+
         return Validator::make($data, [
-            'fullname'  => ['required'],
+            'name'  => ['required'],
             'email'     => ['required', 'email', 'unique:users'],
             'phone'     => ['required', 'numeric'],
             'birthdate' => ['required', 'date'],
@@ -92,15 +91,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        //dd($data);
         return User::create([
-            'fullname'     => $data['fullname'],
-            'email'        => $data['email'],
-            'phone'        => $data['phone'],
-            'birthdate'    => $data['birthdate'],
-            'gender'       => $data['gender'],
-            'address'      => $data['address'],
-            'password'     => Hash::make($data['password']),
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'birthdate' => $data['birthdate'],
+            'gender' => $data['gender'],
+            'address' => $data['address'],
+            'password' => Hash::make($data['password']),
         ]);
     }
 }

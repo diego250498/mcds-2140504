@@ -30,6 +30,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome-all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/owl.theme.default.min.css') }}" rel="stylesheet">
 </head>
 <body>
     @include('layouts.navbar')
@@ -39,21 +41,36 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/sweetalert2@9.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            //
-            @if (session('message'))
-            Swal.fire({
-                title: 'Felicitaciones',
-                text: '{{ session('message') }}',
-                icon: 'success',
-                confirmButtonColor: '#1e5f74',
-                confirmButtonText: 'Aceptar'
+        $(document).ready(function(){
+            $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            responsive:{
+                0:{
+                    items: 1
+                },
+                600:{
+                    items: 2
+                },
+                1000:{
+                    items: 3
+                }
+            }
             });
+            @if (session('message'))
+                Swal.fire({
+                    title: 'Felicitaciones',
+                    text: '{{ session('message') }}',
+                    icon: 'success',
+                    confirmButtonColor: '#1e5f74',
+                    confirmButtonText: 'Aceptar'
+                });
             @endif
-            
-            //
-           @if (session('error'))
+
+            @if (session('error'))
                 Swal.fire({
                   position: 'top-end',
                   icon: 'error',
@@ -64,11 +81,10 @@
                 });
             @endif
 
-            //
             $('.btn-delete').click(function(event) {
                 Swal.fire({
-                    title: 'Esta usted seguro ?',
-                    text: 'Desea eliminar este registro',
+                    title: '¿Está seguro?',
+                    text: 'Desea eliminar el registro?',
                     icon: 'error',
                     showCancelButton: true,
                     cancelButtonColor: '#d0211c',
@@ -76,13 +92,12 @@
                     confirmButtonColor: '#1e5f74',
                     confirmButtonText: 'Aceptar',
                 }).then((result) => {
-                    if(result.value) {
+                    if (result.value) {
                         $(this).parent().submit();
                     }
                 });
             });
 
-          //
             $('#photo').change(function(event) {
                 let reader = new FileReader();
                 reader.onload = function(event) {
@@ -91,7 +106,6 @@
                 reader.readAsDataURL(this.files[0]);
             });
 
-            //
             $('#image').change(function(event) {
                 let reader = new FileReader();
                 reader.onload = function(event) {
@@ -100,14 +114,12 @@
                 reader.readAsDataURL(this.files[0]);
             });
 
-            //
             $('.btn-excel').click(function(event) {
                 $('#file').click();
             });
             $('#file').change(function(event) {
                 $(this).parent().submit();
             });
-            //
 
             $('body').on('keyup','#qsearch', function(event){
                 event.preventDefault();
@@ -125,7 +137,6 @@
                     });
                 }, 2000);
             });
-            //
         });
     </script>
 </body>

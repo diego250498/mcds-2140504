@@ -32,108 +32,108 @@
         </nav>
 
         <form method="POST" action="{{ url('games/'.$game->id) }}" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <input type="hidden" name="id" value="{{ $game->id }}">
-            <div class="form-group">
-                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $game->name) }}" placeholder="Nombre" autofocus>
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id" value="{{ $game->id }}">
+                    <div class="form-group">
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $game->name) }}" autofocus>
 
-                @error('name')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                    </div>
 
-            <div class="form-group">
-                <textarea name="description" class="form-control @error('description') is-invalid @enderror" cols="30" rows="4" placeholder="Descripción">{{ old('description', $game->description) }}</textarea>
+                    <div class="form-group">
+                            <textarea name="description" class="form-control @error('description') is-invalid @enderror" cols="30" rows="4">{{ old('description', $game->description) }}</textarea>
 
-                @error('description')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
+                            @error('description')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                    </div>
 
-            <div class="form-group">
-                <div class="text-center my-3">
-                    <img src="{{ asset($game->image) }}" class="img-thumbnail" id="preview" width="120px">
-                </div>
-                <div class="custom-file">
-                 <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="photo" name="image" accept="image/*">
-                 <label class="custom-file-label" for="customFile"> 
-                    <i class="fa fa-upload"></i> 
-                    Imagen
-                </label>
-                @error('image')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>    
-        </div>
+                    <div class="form-group">
+                            <div class="text-center my-3">
+                                <img src="{{ asset($game->image) }}" class="img-thumbnail" id="preview" width="120px">
+                            </div>
+                            <div class="custom-file">
+                               <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
+                               <label class="custom-file-label" for="customFile">
+                                    <i class="fa fa-upload"></i>
+                                    Imagen
+                               </label>
+                            @error('image')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            </div>
+                    </div>
 
-        <div class="form-group">
-            <select name="user_id" class="form-control @error('user_id') is-invalid @enderror">
-                <option value="">Seleccione Usuario...</option>
-                @foreach ($users as $user)
-                <option value="{{ $user->id }}" @if ($user->id == old('user_id', $game->user_id)) selected @endif>{{ $user->fullname }}</option>
-                @endforeach
-            </select>
+                       <div class="form-group">
+                            <select name="user_id" class="form-control @error('user_id') is-invalid @enderror">
+                                <option value="">Seleccione Usuario...</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}" @if ($user->id == old('user_id', $game->user_id)) selected @endif>{{ $user->name }}</option>
+                                @endforeach
+                            </select>
 
-            @error('user_id')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
+                            @error('user_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                    </div>
 
-        <div class="form-group">
-            <select name="category_id" class="form-control @error('category_id') is-invalid @enderror">
-                <option value="">Seleccione Categoría...</option>
-                @foreach ($categories as $category)
-                <option value="{{ $category->id }}" @if ($category->id == old('category_id', $game->category_id)) selected @endif>{{ $category->name }}</option>
-                @endforeach
-            </select>
+                    <div class="form-group">
+                            <select name="category_id" class="form-control @error('category_id') is-invalid @enderror">
+                                <option value="">Seleccione Categoría...</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" @if ($category->id == old('category_id', $game->category_id)) selected @endif>{{ $category->name }}</option>
+                                @endforeach
+                            </select>
 
-            @error('category_id')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
+                            @error('category_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                    </div>
 
-        <div class="form-group">
-            <select name="slider" class="form-control @error('slider') is-invalid @enderror">
-                <option value="">Seleccione Destacado...</option>
-                <option value="1" @if (old('slider', $game->slider) == 1) selected @endif>Si</option>
-                <option value="2" @if (old('slider', $game->slider) == 2) selected @endif>No</option>
-            </select>
+                    <div class="form-group">
+                            <select name="slider" class="form-control @error('slider') is-invalid @enderror">
+                                <option value="">Seleccione Categoría...</option>
+                                <option value="1" @if (old('slider', $game->slider) == 1) selected @endif>Si</option>
+                                <option value="2" @if (old('slider', $game->slider) == 2) selected @endif>No</option>
+                            </select>
 
-            @error('slider')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
+                            @error('slider')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                    </div>
 
-        <div class="form-group">
-            <input id="price" type="number" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price', $game->price) }}" placeholder="Precio" autofocus>
+                    <div class="form-group">
+                            <input id="price" type="number" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price', $game->price) }}" placeholder="Precio" autofocus>
 
-            @error('price')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
+                            @error('price')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                    </div>
 
-        <div class="form-group">
-            <button type="submit" class="btn btn-larapp btn-block text-uppercase">
-                Editar
-                <i class="fa fa-save"></i> 
-            </button>
-        </div>
-    </form>
-</div>
+                    <div class="form-group">
+                            <button type="submit" class="btn btn-larapp btn-block text-uppercase">
+                                Editar
+                                <i class="fa fa-save"></i>
+                            </button>
+                    </div>
+                </form>
+    </div>
 </div>
 @endsection

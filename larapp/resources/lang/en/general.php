@@ -11,7 +11,7 @@ return [
     'link-forgot'	 => 'Forgot Your Password?',
     // Register Page
     'title-register'  => 'Register',
-    'label-fullname'  => 'FullName',
+    'label-name'  => 'Name',
     'label-phone'     => 'PhoneNumber',
     'label-birthdate' => 'BirthDate',
     'label-gender'    => 'Gender',
@@ -29,7 +29,6 @@ return [
     'link-close'     => 'Logout',
     // Dashboard
     'title-dashboard' => 'Dashboard',
-    // Category
-    'label-name'        =>'Name',
-    'label-description' =>'Description',
+    //Adicionar
+    'btn-save'  => 'Save'
 ];

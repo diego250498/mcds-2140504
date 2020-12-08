@@ -8,9 +8,7 @@ use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
-
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
     }
     /**
@@ -20,9 +18,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-          //$categories = Category::all();
-        $categories = Category:: paginate(3);
-        return view('categories.index')->with('categories', $categories);
+        //$categories = Category::all();
+        $categories = Category::paginate(5);
+        return view ('categories.index')->with('categories', $categories);
     }
 
     /**
@@ -43,46 +41,42 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        
-          //dd($request->all());
+        //dd($request->all());
         $category = new Category;
-        $category->name            = $request->name;
-        $category->description     = $request->description;
-
-        if ($request->hasFile('image')) {
+        $category->name = $request->name;
+        $category->description = $request->description;
+        if($request->hasFile('image')) {
             $file = time().'.'.$request->image->extension();
             $request->image->move(public_path('imgs'), $file);
             $category->image = 'imgs/'.$file;
         }
- 
-
-        if($category->save()) {
-            return redirect('categories')->with('message', 'La Categoria: '.$category->name.' fue Adicionada con Exito!');
+        if ($category->save()) {
+            return redirect('categories')->with('message', 'La categoría: ' .$category->name.
+            ' fue adicionada con éxito');
         }
-
     }
-
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show(Category $category)
     {
         //dd($category);
-         return view('categories.show')->with('category', $category);
+        return view('categories.show')->with('category', $category);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Category $category)
     {
+        //dd($category);
         return view('categories.edit')->with('category', $category);
     }
 
@@ -90,36 +84,38 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(CategoryRequest $request, Category $category)
     {
-      
         //dd($request->all());
-        $category->name            = $request->name;
-        $category->description     = $request->description;
-
-        if ($request->hasFile('image')) {
+        $category->name = $request->name;
+        $category->description = $request->description;
+        if($request->hasFile('image')) {
             $file = time().'.'.$request->image->extension();
             $request->image->move(public_path('imgs'), $file);
             $category->image = 'imgs/'.$file;
         }
 
-        if($category->save()) {
-            return redirect('categories')->with('message', 'La Categoria: '.$category->name.' fue Modificada con Exito!');
-        } 
+        if ($category->save()) {
+            return redirect('categories')->with('message', 'La categoría: ' .$category->name.
+            ' fue modificada con éxito');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Category $category)
     {
-       if($category->delete()) { return redirect('categories')->with('message', 'La Categoria: '.$category->name.' fue Eliminada con Exito!'); 
+        if ($category->delete()) {
+            return redirect('categories')->with('message', 'La categoría: ' .$category->name.
+            ' fue eliminada con éxito');
+        }
     }
-  }
 }
+

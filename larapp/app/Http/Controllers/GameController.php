@@ -7,11 +7,15 @@ use App\User;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\GameRequest;
+
 use App\Exports\GameExport;
 use App\Imports\GameImport;
 
 class GameController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +23,7 @@ class GameController extends Controller
      */
     public function index()
     {
-        $games = Game::paginate(2);
+        $games = Game::paginate(10);
         return view('games.index')->with('games', $games);
     }
 
@@ -28,12 +32,12 @@ class GameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-   public function create()
+    public function create()
     {
         $users = User::where('role', 'Admin')->get();
-        $cats  = Category::all();
+        $categories = Category::all();
         return view('games.create')->with('users', $users)
-                                   ->with('cats', $cats);
+                                   ->with('categories', $categories);
     }
 
     /**
@@ -44,7 +48,7 @@ class GameController extends Controller
      */
     public function store(GameRequest $request)
     {
-         //dd($request->all());
+        //dd($request->all());
         $game = new Game;
         $game->name        = $request->name;
         $game->description = $request->description;
@@ -53,7 +57,6 @@ class GameController extends Controller
             $request->image->move(public_path('imgs'), $file);
             $game->image = 'imgs/'.$file;
         }
-
         $game->user_id      = $request->user_id;
         $game->category_id  = $request->category_id;
         if($game->slider == 2) {
@@ -65,13 +68,13 @@ class GameController extends Controller
 
         if($game->save()) {
             return redirect('games')->with('message', 'El Juego: '.$game->name.' fue Adicionado con Exito!');
-        } 
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Game  $game
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show(Game $game)
@@ -82,13 +85,13 @@ class GameController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Game  $game
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Game $game)
     {
         $users = User::where('role', 'Admin')->get();
-        $categories  = Category::all();
+        $categories = Category::all();
         return view('games.edit')->with('users', $users)
                                  ->with('categories', $categories)
                                  ->with('game', $game);
@@ -98,20 +101,19 @@ class GameController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Game  $game
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(GameRequest $request, Game $game)
     {
-        //dd($request->all())
-        $game->name        = $request->name;
+        //dd($request->all());
+        $game->name = $request->name;
         $game->description = $request->description;
-        if ($request->hasFile('image')) {
+        if($request->hasFile('image')) {
             $file = time().'.'.$request->image->extension();
             $request->image->move(public_path('imgs'), $file);
             $game->image = 'imgs/'.$file;
         }
-
         $game->user_id      = $request->user_id;
         $game->category_id  = $request->category_id;
         if($game->slider == 2) {
@@ -119,46 +121,46 @@ class GameController extends Controller
         } else {
             $game->slider = $request->slider;
         }
-            $game->price      = $request->price;
+        $game->price      = $request->price;
 
-        if($game->save()) {
-            return redirect('games')->with('message', 'El Juego: '.$game->name.' fue Modificado con Exito!');
-        } 
+        if ($game->save()) {
+            return redirect('games')->with('message', 'El juego: ' .$game->name.
+            ' fue modificado con éxito');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Game  $game
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Game $game)
     {
-      if($game->delete()) {
-        return redirect('games')->with('message', 'El Juego: '.$game->name.' fue Eliminado con Exito!');
-    } 
-}
+        if ($game->delete()) {
+            return redirect('games')->with('message', 'El juego: ' .$game->name.
+            ' fue eliminado con éxito');
+        }
+    }
 
-public function pdf() {
-    $games = Game::all();
-    $pdf = \PDF::loadView('games.pdf', compact('games'));
-    return $pdf->download('allgames.pdf');
-}
+    public function pdf() {
+        $games = Game::all();
+        $pdf = \PDF::loadView('games.pdf', compact('games'));
+        return $pdf->download('allgames.pdf');
+    }
 
-public function excel() {
+    public function excel() {
+        return \Excel::download(new GameExport, 'allgames.xlsx');
+    }
 
-  return \Excel::download(new GameExport, 'allgames.xlsx');
-}
+    public function import(Request $request) {
+        $file = $request->file('file');
+        \Excel::import(new GameImport, $file);
+        return redirect()->back()->with('message', 'Juegos importados con éxito!');
+    }
 
-public function import(Request $request) {
-    $file = $request->file('file');
-    \Excel::import(new GameImport, $file);
-    return redirect()->back()->with('message', 'Juegos importados con exito!');
-}
-
-public function search(Request $request) {
-    $games = Game::names($request->q)->orderBy('id','ASC')->paginate(2);
-    return view('games.search')->with('games', $games);
-}
-
+    public function search(Request $request) {
+        $games = Game::names($request->q)->orderBy('id','ASC')->paginate(10);
+        return view('games.search')->with('games', $games);
+    }
 }
