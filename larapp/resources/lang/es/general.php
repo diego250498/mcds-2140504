@@ -11,7 +11,7 @@ return [
     'link-forgot'	 => 'Olvidó su Contraseña?',
     // Register Page
     'title-register'  => 'Registrarse',
-    'label-name'  => 'Nombre Completo',
+    'label-fullname'  => 'Nombre Completo',
     'label-phone'     => 'Número Telefónico',
     'label-birthdate' => 'Fecha de Nacimiento',
     'label-gender'    => 'Genero',
@@ -29,6 +29,8 @@ return [
     'link-close'     => 'Cerrar Sesión',
     // Dashboard
     'title-dashboard' => 'Escritorio',
-    //Adicionar
-    'btn-save'  => 'Guardar'
+    // Category
+    'label-name'        =>'Nombre Categoria',
+    'label-description' =>'Descripcion Categoria',
+
 ];

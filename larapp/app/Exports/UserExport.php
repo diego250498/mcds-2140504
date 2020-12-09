@@ -22,19 +22,17 @@ class UserExport implements FromView, WithColumnWidths, WithStyles
     {
         return [
             'A' => 5,
-            'B' => 25,
-            'C' => 30,
-            'D' => 15,
-            'E' => 30,
-            'F' => 20,
+            'B' => 30,  
+            'C' => 35,            
+            'D' => 15,            
+            'E' => 24,            
         ];
     }
 
     public function styles(Worksheet $sheet)
     {
         return [
-            // Style the first row as bold text.
-            1    => ['font' => ['bold' => true, 'size' => 10]],
+            1 => ['font' => ['bold' => true, 'size' => 10]],
         ];
     }
 }
